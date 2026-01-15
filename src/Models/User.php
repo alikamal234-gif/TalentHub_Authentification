@@ -22,23 +22,23 @@ class User
         $this->role = $role;
     }
 
-    public function getId()
+    public function getId(): int|null
     {
         return $this->id;
     }
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
-    public function getRole()
+    public function getRole(): Role
     {
         return $this->role;
     }
