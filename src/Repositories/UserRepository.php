@@ -1,9 +1,21 @@
 <?php
-
-
+namespace App\Repositories;
+use App\Database\Database;
+use PDO;
 class UserRepository {
-    public function findByEmail(string $email){
+    private $conn;
 
+    public function __construct() {
+        $this->conn = Database::getInstance()->getConnection();
+    }
+
+    public function findByEmail(string $email){
+        $sql = "SELECT * FROM users where email = :email";
+        $stm = $this->conn->prepare($sql);
+        $stm->bindParam(":email",$email);
+        $stm->execute();
+        $result = $stm->fetch(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     public function findById(int $id){
@@ -11,7 +23,7 @@ class UserRepository {
     }
 
     public function save(){
-        
+
     }
 
 }

@@ -1,5 +1,10 @@
 <?php
 
+
+namespace App\Database;
+
+use PDO;
+use Exception;
 class Database {
     private string $host = "localhost";
     private string $user = "root";
