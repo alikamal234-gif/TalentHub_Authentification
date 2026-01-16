@@ -26,18 +26,17 @@ class Router
         $path = strtok($uri, "?");
         $path = str_replace("/TalentHub_Authentification", "", $path);
         $method = $_SERVER['REQUEST_METHOD'];
-        if ($path == "") {
-            $path = "/";
-        }
+        $path = $path ?: '/';
+       
 
         if (array_key_exists($path, $this->router[$method])) {
             $controller = $this->router[$method][$path]['controller'];
             $action = $this->router[$method][$path]['action'];
-            $controller = new $controller;
+            $controller = new $controller($GLOBALS['twig']);
             $controller->$action();
             exit;
         } else {
-            require_once __DIR__ . "/../Views/errors/404.php";
+            require_once __DIR__ . "/../Views/errors/404.html.twig";
         }
 
     }

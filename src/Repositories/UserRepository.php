@@ -28,7 +28,7 @@ class UserRepository
 
     public function save($data)
     {
-        $sql = "INSERT INTO user (name,email,password,role_id) VALUES (?,?,?)";
+        $sql = "INSERT INTO users (name,email,password,role_id) VALUES (?,?,?,?)";
         $stm = $this->conn->prepare($sql);
         $stm->execute([$data->getEmail(),$data->getEmail(),$data->getPassword(),$data->getRole()->getID()]);
     }

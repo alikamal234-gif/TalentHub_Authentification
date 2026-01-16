@@ -19,10 +19,11 @@ class AuthService {
     public function checkPassword($email,$passwordUser){
         $data = $this->UserRepository->findByEmail($email);
         if(password_verify($passwordUser,$data['password'])){
+            $role =$this->RoleRepository->getRoleBy($data['role_id']);
             $_SESSION['user'] = [
                 'id' => $data['id'],
                 'email' => $data['email'],
-                'role' => $data['role']
+                'role' => $role['name']
             ];
             return true;
         }
@@ -40,6 +41,13 @@ class AuthService {
         if($this->RoleRepository->getRoleBy($id)){
             $role = $this->RoleRepository->getRoleBy($id);
             return $role;
+        }
+    }
+
+
+    public function confirmePassword($password,$confirme){
+        if($password == $confirme){
+            return true;
         }
     }
 
