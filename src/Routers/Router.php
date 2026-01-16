@@ -34,6 +34,7 @@ class Router
             $action = $this->router[$method][$path]['action'];
             $controller = new $controller($GLOBALS['twig']);
             $controller->$action();
+
             exit;
         } else {
             require_once __DIR__ . "/../Views/errors/404.html.twig";

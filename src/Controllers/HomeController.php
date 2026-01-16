@@ -2,31 +2,50 @@
 namespace App\Controllers;
 use Twig\Environment;
 $role = $_SESSION['user']['role'] ?? '/login';
-class HomeController {
+class HomeController
+{
 
-     private Environment $twig;
+    private Environment $twig;
 
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }
-    
-    public function dashboard(){
-        global $role;
-        echo $this->twig->render("$role/dashboard.html.twig");
+
+    public function admin()
+    {
+        echo $this->twig->render("admin/dashboard.html.twig");
     }
-    public function index(){
-        
+    public function listadmin()
+    {
+        echo $this->twig->render("admin/ListCondidate.html.twig");
+    }
+    public function candidate()
+    {
+        echo $this->twig->render("condidate/dashboard.html.twig");
+    }
+    public function recruteur()
+    {
+        echo $this->twig->render("recruteur/dashboard.html.twig");
+    }
+
+
+
+    public function index()
+    {
+
         require_once __DIR__ . '/../Views/Home/index.html.twig';
     }
 
-    public function login(){
-        
+    public function login()
+    {
+
         require_once __DIR__ . '/../Views/auth/login.html.twig';
 
     }
-    public function register(){
-        
+    public function register()
+    {
+
         require_once __DIR__ . '/../Views/auth/register.html.twig';
 
     }

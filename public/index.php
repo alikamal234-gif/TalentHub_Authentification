@@ -19,5 +19,6 @@ $router->post(AuthController::class,'register','/register');
 $router->get(HomeController::class,'login','/login');
 $router->post(AuthController::class,'login','/login');
 $router->get(HomeController::class,'register','/register');
-$router->get(HomeController::class,"dashboard","/$role");
+$router->get(HomeController::class,"$role","/$role/dashboard");
+$router->get(HomeController::class,"list$role","/$role/ListCondidate");
 $router->dispatch();

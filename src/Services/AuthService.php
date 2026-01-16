@@ -51,5 +51,11 @@ class AuthService {
         }
     }
 
+    public function isAdmin($role){
+        if(strtoupper($role) == "ADMIN"){
+            return true;
+        }
+    }
+
     
 }
