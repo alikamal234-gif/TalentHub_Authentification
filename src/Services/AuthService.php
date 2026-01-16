@@ -2,8 +2,14 @@
 
 namespace App\Services;
 use App\Repositories\UserRepository;
+use App\Repositories\RoleRepository;
 class AuthService {
-
+    private $UserRepository;
+    private $RoleRepository;
+    public function __construct() {
+        $this->UserRepository = new UserRepository();
+        $this->RoleRepository = new RoleRepository();
+    }
     public function checkEmail($email){
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             return true;
@@ -11,8 +17,7 @@ class AuthService {
     }
     
     public function checkPassword($email,$passwordUser){
-        $UserRepository = new UserRepository();
-        $data = $UserRepository->findByEmail($email);
+        $data = $this->UserRepository->findByEmail($email);
         if(password_verify($passwordUser,$data['password'])){
             $_SESSION['user'] = [
                 'id' => $data['id'],
@@ -24,14 +29,19 @@ class AuthService {
     }
 
     public function exictEmail($email){
-        $UserRepository = new UserRepository();
-        $exict = $UserRepository->findByEmail($email);
+        
+        $exict = $this->UserRepository->findByEmail($email);
         if($exict){
             return true;
         }
     }
 
-    
+    public function exictRole($id){
+        if($this->RoleRepository->getRoleBy($id)){
+            $role = $this->RoleRepository->getRoleBy($id);
+            return $role;
+        }
+    }
 
     
 }
