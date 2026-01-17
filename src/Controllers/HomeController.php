@@ -20,14 +20,25 @@ class HomeController
     {
         echo $this->twig->render("admin/ListCondidate.html.twig");
     }
-    public function candidate()
+    public function candidat()
     {
-        echo $this->twig->render("condidate/dashboard.html.twig");
+        echo $this->twig->render("candidate/dashboard.html.twig");
     }
     public function recruteur()
     {
         echo $this->twig->render("recruteur/dashboard.html.twig");
     }
+
+
+    public function register()
+{
+    echo $this->twig->render('auth/register.html.twig', [
+        'errors' => $_SESSION['errors_register'] ?? []
+    ]);
+    
+
+    unset($_SESSION['errors_register']);
+}
 
 
 
@@ -40,13 +51,19 @@ class HomeController
     public function login()
     {
 
-        require_once __DIR__ . '/../Views/auth/login.html.twig';
+        // require_once __DIR__ . '/../Views/auth/login.html.twig';
+        echo $this->twig->render('auth/login.html.twig', [
+        'errors' => $_SESSION['error_login'] ?? []
+    ]);
+
+        unset($_SESSION['error_login']);
+
 
     }
-    public function register()
-    {
+    // public function register()
+    // {
 
-        require_once __DIR__ . '/../Views/auth/register.html.twig';
+    //     require_once __DIR__ . '/../Views/auth/register.html.twig';
 
-    }
+    // }
 }
