@@ -4,6 +4,7 @@ session_start();
 use App\Routers\Router;
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
+use App\Controllers\VerificationController;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -17,6 +18,8 @@ $router = new Router();
 $router->get(HomeController::class,'index','/');
 $router->post(AuthController::class,'register','/register');
 $router->get(HomeController::class,'login','/login');
+$router->get(HomeController::class,'verification','/verification');
+$router->post(VerificationController::class, 'verify', '/verification');
 $router->post(AuthController::class,'login','/login');
 $router->get(HomeController::class,'register','/register');
 $router->get(HomeController::class,"$role","/$role/dashboard");

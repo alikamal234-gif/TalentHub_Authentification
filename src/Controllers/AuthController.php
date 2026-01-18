@@ -8,11 +8,13 @@ class AuthController
 {
     private $checkLogin;
     private $UserController;
+    private $verificationController;
 
     public function __construct()
     {
         $this->checkLogin = new AuthService();
         $this->UserController = new UserRepository();
+        $this->verificationController = new verificationController();
     }
     public function login()
     {
@@ -34,14 +36,14 @@ class AuthController
                 header("Location: $role/dashboard");
             } else {
                 $_SESSION['error_login'][] = "Password incorrect";
-                
+
             }
-            
+
             if (!empty($_SESSION['error_login'])) {
                 header("Location: login");
                 exit;
             }
-            
+
 
         }
     }
@@ -53,7 +55,7 @@ class AuthController
                 "email" => $_POST['email'],
                 "password" => $_POST['password'],
                 "password_verify" => $_POST['password_confirm'],
-                "role" => $_POST['role']
+                "role" => $_POST['role'],
             ];
 
 
@@ -66,7 +68,7 @@ class AuthController
 
 
             if (!$this->checkLogin->confirmePassword($data['password'], $data['password_verify'])) {
-               $_SESSION['errors_register'][] = "Les mots de passe ne correspondent pas";
+                $_SESSION['errors_register'][] = "Les mots de passe ne correspondent pas";
             }
 
             if ($this->checkLogin->isAdmin($role['name'])) {
@@ -74,17 +76,22 @@ class AuthController
             }
 
             if (!empty($_SESSION['errors_register'])) {
-            header("Location: register");
-            exit;
-        }
-
+                header("Location: register");
+                exit;
+            }
             $passwordHash = password_hash($data['password'], PASSWORD_DEFAULT);
             $User = new User(null, $data['name'], $data['email'], $passwordHash, $Role);
-            $this->UserController->save($User);
 
-            header("Location: login");
+            $_SESSION['data_temp'] = $User;
+            // $this->UserController->save($User);
+            $codeVerification = rand(100000, 999999);
+            $_SESSION['codeVerification'] = $codeVerification;
+            $_SESSION['email_verification'] = $data['email'];
+            $this->checkLogin->sendVerificationEmail($data['email'], $codeVerification);
+            header("Location: verification");
+            exit;
         }
     }
 
-    
+
 }

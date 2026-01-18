@@ -30,7 +30,7 @@ class UserRepository
     {
         $sql = "INSERT INTO users (name,email,password,role_id) VALUES (?,?,?,?)";
         $stm = $this->conn->prepare($sql);
-        $stm->execute([$data->getEmail(),$data->getEmail(),$data->getPassword(),$data->getRole()->getID()]);
+        $stm->execute([$data->getName(),$data->getEmail(),$data->getPassword(),$data->getRole()->getID()]);
     }
 
 }

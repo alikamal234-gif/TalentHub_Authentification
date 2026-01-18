@@ -60,10 +60,7 @@ class HomeController
 
 
     }
-    // public function register()
-    // {
-
-    //     require_once __DIR__ . '/../Views/auth/register.html.twig';
-
-    // }
+    public function verification(){
+        echo $this->twig->render('auth/verification.html.twig');
+    }
 }
